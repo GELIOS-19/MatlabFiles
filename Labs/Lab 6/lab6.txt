@@ -1,0 +1,426 @@
+rand('seed', 7132)
+% Arjun Sheshadri
+% 7132
+% Section C1
+% Math 250 MATLAB Lab Assignment #6
+% Question 1
+u = rvect(2), v = rvect(2)
+
+u =
+
+     0
+     1
+
+
+v =
+
+     0
+     8
+
+rank([u v])
+
+ans =
+
+     1
+
+u = rvect(2), v = rvect(2)
+
+u =
+
+     9
+     2
+
+
+v =
+
+     0
+     8
+
+rank([u v])
+
+ans =
+
+     2
+
+% Question 1 (a)
+% The triangle inequality is ||u+v|| <= ||u||+||v||
+norm(u + v)
+
+ans =
+
+   13.4536
+
+norm(u) + norm(v)
+
+ans =
+
+   17.2195
+
+% Question 1 (b)
+% The Cauchy-Schwarz inequality is ||u*v|| <= ||u||*||v||
+abs(u'*v)
+
+ans =
+
+    16
+
+norm(u)'*norm(v)
+
+ans =
+
+   73.7564
+
+% Question 1 (c)
+w=((u'*v)/(v'*v))*v
+
+w =
+
+     0
+     2
+
+z=u-w
+
+z =
+
+     9
+     0
+
+z'*v
+
+ans =
+
+     0
+
+% Question 1 (d)
+P = v*inv(v'*v)*v'
+
+P =
+
+     0     0
+     0     1
+
+% The matrix P is a 2x2 matrix. This is due to P being the result of the outer product of the vector v with itself, scaled by the inverse of the dot product of v with its transpose, represented as inv(v'*v). Considering that v is a 2x1 matrix, multiplying v by its transpose yields a square matrix with dimensions nxn. In this context, n refers to the count of rows in v, which matches the count of columns in the transpose of v.
+P*u
+
+ans =
+
+     0
+     2
+
+w
+
+w =
+
+     0
+     2
+
+% Question 2
+u1=rvect(3), u2=rvect(3),u3=rvect(3)
+
+u1 =
+
+     5
+     8
+     4
+
+
+u2 =
+
+     7
+     5
+     6
+
+
+u3 =
+
+     3
+     0
+     1
+
+rank([u1,u2,u3])
+
+ans =
+
+     3
+
+% Question 2 (a)
+r =0:0.05:1; hold on
+plot3(r*u1(1),r*u1(2),r*u1(3), 'r:')
+plot3(r*u2(1),r*u2(2),r*u2(3), 'g:')
+plot3(r*u3(1),r*u3(2),r*u3(3), 'b:')
+% Based on the graph, u1, u2, and u3 are not mutually orthogonal since they are not perpendicular to each other
+% Question 2 (b)
+v1=u1
+
+v1 =
+
+     5
+     8
+     4
+
+P1= v1*inv(v1'*v1)*v1', v2=u2-P1*u2
+
+P1 =
+
+    0.2381    0.3810    0.1905
+    0.3810    0.6095    0.3048
+    0.1905    0.3048    0.1524
+
+
+v2 =
+
+    2.2857
+   -2.5429
+    2.2286
+
+v1'*u1
+
+ans =
+
+   105
+
+v1'*v2
+
+ans =
+
+  -1.7764e-14
+
+plot3(r*v2(1),r*v2(2),r*v2(3), 'g-.')
+P2 = v2*inv(v2'*v2)*v2', v3= u3-P1*u3-P2*u3
+
+P2 =
+
+    0.3136   -0.3489    0.3058
+   -0.3489    0.3882   -0.3402
+    0.3058   -0.3402    0.2982
+
+
+v3 =
+
+    0.8485
+   -0.0606
+   -0.9394
+
+v3'*v1
+
+ans =
+
+   7.9936e-15
+
+v3'*v2
+
+ans =
+
+   4.4409e-15
+
+plot3(r*v3(1),r*v3(2),r*v3(3), 'b-.')
+% Question 2 (c)
+w1= v1/norm(v1), w2=v2/norm(v2), w3 = v3/norm(v3)
+
+w1 =
+
+    0.4880
+    0.7807
+    0.3904
+
+
+w2 =
+
+    0.5600
+   -0.6230
+    0.5460
+
+
+w3 =
+
+    0.6695
+   -0.0478
+   -0.7413
+
+Q=[w1, w2, w3]
+
+Q =
+
+    0.4880    0.5600    0.6695
+    0.7807   -0.6230   -0.0478
+    0.3904    0.5460   -0.7413
+
+% The entries in the 3x3 matrix QT*Q represent the dot products of corresponding rows and columns from QT and Q. Each entry is the dot product of wi and wj, where wi is a row from QT and wj is a column in Q. Since Q's columns are orthonormal, dot products of any combinations of vectors from these columns equal zero. QT's rows are Q's columns, so all entries in QT*Q should be zero, except for diagonal entries. Diagonal entries, being dot products of vectors with themselves, should be 1, showing the orthonormality of {w1,w2,w2}. This indicates that if a square matrix is orthogonal (its columns are orthonormal), QT*Q equals the identity matrix. 
+% Question 2 (c) (ii)
+% By definition, the inverse Q^-1 of an orthogonal matrix equals its transpose QT
+transpose(Q)*Q
+
+ans =
+
+    1.0000   -0.0000    0.0000
+   -0.0000    1.0000    0.0000
+    0.0000    0.0000    1.0000
+
+inv(Q)
+
+ans =
+
+    0.4880    0.7807    0.3904
+    0.5600   -0.6230    0.5460
+    0.6695   -0.0478   -0.7413
+
+% Question 2 (d)
+A = [u1, u2, u3], R = Q'*A
+
+A =
+
+     5     7     3
+     8     5     0
+     4     6     1
+
+
+R =
+
+   10.2470    9.6614    1.8542
+   -0.0000    4.0813    2.2262
+    0.0000    0.0000    1.2673
+
+Q*R
+
+ans =
+
+    5.0000    7.0000    3.0000
+    8.0000    5.0000   -0.0000
+    4.0000    6.0000    1.0000
+
+% Question 2 (d) (iii)
+% Matrix R takes the form of an upper triangular matrix, where each element is derived from the dot products between A's columns and Q's orthonormal columns. Specifically, the entry at R(2,1) is zero because the dot product of w2 (the second orthonormal column in Q) and u1 (the first column of A) is zero. Similarly, the entries at R(3,1) and R(3,2) are zero, corresponding to the zero dot products of w3 with u1, and w3 with u2, respectively. This pattern establishes R's upper triangular structure, characterized in a 3x3 matrix by zeros at positions (2,1), (3,1), and (3,2).
+% Question 3
+a1=rvect(5); a2=rvect(5); a3= rvect(5); A=[a1,a2,a3]
+
+A =
+
+     4     7     5
+     3     1     2
+     7     2     5
+     3     7     3
+     7     0     3
+
+rank(A)
+
+ans =
+
+     3
+
+% Question 3 (a)
+Q = grams(A); w1=Q(:,1), w2=Q(:,2), w3 = Q(:,3)
+
+w1 =
+
+    0.3482
+    0.2611
+    0.6093
+    0.2611
+    0.6093
+
+
+w2 =
+
+    0.5976
+   -0.0598
+   -0.1793
+    0.6574
+   -0.4183
+
+
+w3 =
+
+    0.4456
+    0.0649
+    0.4604
+   -0.5863
+   -0.4915
+
+Q'*Q
+
+ans =
+
+    1.0000         0   -0.0000
+         0    1.0000   -0.0000
+   -0.0000   -0.0000    1.0000
+
+% {w1,w2,w3} is orthonormal since Q'*Q is the identity matrix
+% Question 3 (b)
+P = w1*w1' + w2*w2' + w3*w3'
+
+P =
+
+    0.6769    0.0841    0.3101    0.2225   -0.2569
+    0.0841    0.0760    0.1997   -0.0092    0.1522
+    0.3101    0.1997    0.6153   -0.2287    0.2200
+    0.2225   -0.0092   -0.2287    0.8441    0.1723
+   -0.2569    0.1522    0.2200    0.1723    0.7878
+
+v = rvect(5)
+
+v =
+
+     5
+     3
+     5
+     5
+     6
+
+w = P*v, z = v-w
+
+w =
+
+    4.7586
+    2.5142
+    5.4022
+    5.1959
+    5.8600
+
+
+z =
+
+    0.2414
+    0.4858
+   -0.4022
+   -0.1959
+    0.1400
+
+P*w
+
+ans =
+
+    4.7586
+    2.5142
+    5.4022
+    5.1959
+    5.8600
+
+P*z
+
+ans =
+
+   1.0e-14 *
+
+    0.2248
+    0.0260
+    0.2241
+   -0.3088
+   -0.2720
+
+% Question 3 (c)
+PW = A*inv(A'*A)*A'
+
+PW =
+
+    0.6769    0.0841    0.3101    0.2225   -0.2569
+    0.0841    0.0760    0.1997   -0.0092    0.1522
+    0.3101    0.1997    0.6153   -0.2287    0.2200
+    0.2225   -0.0092   -0.2287    0.8441    0.1723
+   -0.2569    0.1522    0.2200    0.1723    0.7878
+
+norm(PW-P)
+
+ans =
+
+   5.0791e-15
+

@@ -1,0 +1,80 @@
+% Question 3
+A = rmat(2, 3), B = rmat(3, 4), C = rmat(4, 3), v = rvect(4)
+A =
+     0     0     9
+     1     8     2
+B =
+     0     8     5     0
+     8     4     6     1
+     5     7     3     4
+C =
+     3     7     0
+     7     1     5
+     3     2     2
+     7     7     5
+v =
+     3
+     3
+     5
+     3
+% Question 3 (a)
+u = B*v, A*u, D = A*B, D*v
+u =
+    49
+    69
+    63
+ans =
+   567
+   727
+D =
+    45    63    27    36
+    74    54    59    16
+ans =
+   567
+   727
+% Question 3 (b)
+A = [0 1; 0 0], B = [0 0; 1 0], C = [0 1; 1 0]
+A =
+     0     1
+     0     0
+B =
+     0     0
+     1     0
+C =
+     0     1
+     1     0
+% Question 3 (b) (i)
+A*B
+ans =
+     1     0
+     0     0
+B*A
+ans =
+     0     0
+     0     1
+% A*B and B*A are not equal
+(A + B)^2
+ans =
+     1     0
+     0     1
+A^2 + 2*A*B + B^2
+ans =
+     2     0
+     0     0
+% (A + B)^2 and A^2 + 2*A*B + B^2 are not equal
+% Question 3 (b) (ii)
+A^2
+ans =
+     0     0
+     0     0
+% If A were a number, then the value of A would equal the square root of A^2. This conclusion is not valid for matricies as the multiplying a matrix by itself does not square its entries.
+% Question 3 (b) (iii)
+A*C
+ans =
+     1     0
+     0     0
+A*B
+ans =
+     1     0
+     0     0
+% If A, B, anc C were numbers and A != 0 and B != C, then A*C != A*B. However, this is not valid for matrices as it it possible for B != C and A*C = A*B

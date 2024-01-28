@@ -1,0 +1,65 @@
+rand('seed', 7132)
+% Arjun Sheshadri
+% 7132
+% Section 117
+% Math 250 MATLAB Lab Assignment #3
+% Question 1 (a)
+A = rand(3), A(1,1), det(A(1:2,1:2)), det(A)
+A =
+    0.0665    0.8662    0.0854
+    0.1701    0.9419    0.9000
+    0.0198    0.2654    0.5117
+ans =
+    0.0665
+ans =
+   -0.0847
+ans =
+   -0.0415
+U = A
+U =
+    0.0665    0.8662    0.0854
+    0.1701    0.9419    0.9000
+    0.0198    0.2654    0.5117
+col1
+L1 =
+    1.0000         0         0
+   -2.5569    1.0000         0
+   -0.2977         0    1.0000
+U = L1*U
+U =
+    0.0665    0.8662    0.0854
+         0   -1.2728    0.6815
+         0    0.0076    0.4863
+% Elementary row operations were used to perform the first step of converting U into row echelon form. The elementary operations were performed by multiplying a compound elementary matrix L1 with U. L1 was originally a 3x3 identity matrix. L1(2,:) and L1(3,:) were subtracted by multiples of L1(1,:) which were scaled according to the ration U(2,1)/U(1,1) for L1(1,:) and U(3,1)/U(1,1) for L1(3,:). These ratios determine the scale of L1(2,:) and L1(3,:) respectively in order to make sure that U(2,1) and U(3,1) are zero after the row operations are performed.
+% Question 1 (b)
+col2
+L2 =
+    1.0000         0         0
+         0    1.0000         0
+         0    0.0060    1.0000
+U=L2*U
+U =
+    0.0665    0.8662    0.0854
+         0   -1.2728    0.6815
+         0         0    0.4904
+% Elementary row operations were used to perform the second step of converting U into row echelon form, by making entry U(3,2) = 0. This was done in the same manner as the previous step, by subracting L2(3,:) by a multiple of L2(2,:) which is scaled by U(3,2)/U(2,2), a constant that will ensure that after the row operation that U(3,2)=0.
+U=L2*L1*A
+U =
+    0.0665    0.8662    0.0854
+         0   -1.2728    0.6815
+    0.0000         0    0.4904
+% Values of U match after L2*U and L2*L1*A
+% Question 1 (c)
+inv(L1), inv(L2), L = inv(L1)*inv(L2)
+ans =
+    1.0000         0         0
+    2.5569    1.0000         0
+    0.2977         0    1.0000
+ans =
+    1.0000         0         0
+         0    1.0000         0
+         0   -0.0060    1.0000
+L =
+    1.0000         0         0
+    2.5569    1.0000         0
+    0.2977   -0.0060    1.0000

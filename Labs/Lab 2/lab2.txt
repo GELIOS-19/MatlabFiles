@@ -1,0 +1,338 @@
+% Arjun Sheshadri
+% 7132
+% Section 117
+% Math 250 MATLAB Lab Assignment #2
+rand('seed', 7132)
+% Question 1 (a)
+A = rmat(3, 5), rank(A(:, 1:3))
+A =
+     0     8     0     8     5
+     1     9     8     4     6
+     0     2     5     7     3
+ans =
+     3
+b = rvect(3), R = rref([A b])
+b =
+     0
+     1
+     4
+R =
+    1.0000         0         0  -13.0000   -2.4250   -5.4000
+         0    1.0000         0    1.0000    0.6250         0
+         0         0    1.0000    1.0000    0.3500    0.8000
+S = R(:, 1:5)
+S =
+    1.0000         0         0  -13.0000   -2.4250
+         0    1.0000         0    1.0000    0.6250
+         0         0    1.0000    1.0000    0.3500
+% Question 1 (a) (i) Columns 1, 2, and 3 of S are pivot columns since they contain a leading entry (aka. pivot position) 
+% Question 1 (a) (ii) The rank of R is 3 since the rank of a matrix equals its number of pivot columns. The rank of A is also 3 since the rank of R is 3 and R is just the reduced row echelon form of [A b], and since b is not a pivot column this addition does not affect the rank of A
+% Question 1 (a) (iii) The nullity of A is 2 since nullity = # of columns - rank, which for A is 5 - 3 = 2. The free variables of the system are x4 and x5 since columns 4 and 5 of R are not pivot columns.
+% Question 1 (a) (iv) This system Ax = b has a solution since the system is consistent. The system has infinitely many solutions since there are two free variables.
+% Question 1 (b)
+c = R(:, 6)
+c =
+   -5.4000
+         0
+    0.8000
+x = [c; 0; 0]
+x =
+   -5.4000
+         0
+    0.8000
+         0
+         0
+A*x - b
+ans =
+     0
+     0
+     0
+S*x - c
+ans =
+     0
+     0
+     0
+% Question 1 (b) (ii) Matrices A and b are augmented as [A b] and then placed into reduced row echelon form by performing elementary row operations to obtain [S c]. Since these row operations are reversible, it stands that the solutions to both A*x = b and S*x = c are equal. The linear combination of A and x will equal b, and the linear combination of S and x will equal c.
+% Question 1 (c)
+u = [-S(:,4); 1; 0], v = [-S(:,5);0;1]
+u =
+    13
+    -1
+    -1
+     1
+     0
+v =
+    2.4250
+   -0.6250
+   -0.3500
+         0
+    1.0000
+% Question 1 (c) (i) Since A has 3 pivot columns represent 3 basic variables and 2 columns representing free variables, any non-trivial solution to the equation A*x = 0 will be a linear combination of the 2 non-pivot columns (column 4 and 5). This is because columns 1-3 are linearly independent and therefore the only linear combination of these columns that will add up to zero would be the trivial solution where all coefficients are 0. However, the 4th and 5th columns of A are linearly dependent, therefore only those two column vectors would contribute to the equation A*x = 0. Vectors u and v are constructed such that the coefficients they represent are the negatives of the coefficients in columns 4 and 5 respectively. Additionally, u(5, 1) = 0 and v(4, 1) = 0 while u(4, 1) = 1 and u(5, 1) = 1 ensures that the coefficients in u only influence the 4th column and the coefficients in v only influence the 5th column. Therefore A*u and A*v will result in 0 vectors, and since S is just the rref of A, S*u and S*v also result in zero vectors. 
+S*u
+ans =
+     0
+     0
+     0
+A*u
+ans =
+     0
+     0
+     0
+S*v
+ans =
+     0
+     0
+     0
+A*v
+ans =
+     0
+     0
+     0
+% Question 1 (c) (ii)
+s = rand(1), t = rand(1), y = s*u + t*v
+s =
+    0.3901
+t =
+    0.0572
+y =
+    5.2105
+   -0.4259
+   -0.4102
+    0.3901
+    0.0572
+% Since y = s*u + t*v, A*y = A*(s*u + t*v) = A*s*u + A*t*v, and since A*u and A*v are both 0 vectors, multiplying by scalars s and t will still result in the zero vector.
+A*y
+ans =
+   1.0e-15 *
+   -0.1665
+   -0.4996
+    0.0833
+% Question 1 (d)
+z = x + y
+z =
+   -0.1895
+   -0.4259
+    0.3898
+    0.3901
+    0.0572
+% Since z = x + y and y is approximately 0, then z = x and therefore A*z = b because A*x = b
+A*z - b
+ans =
+   1.0e-15 *
+   -0.1665
+   -0.4441
+         0
+% Question 2 (a)
+u1 = rvect(3), u2 = rvect(3), u3 = rvect(3), u4 = rvect(3)
+u1 =
+     3
+     0
+     0
+u2 =
+     9
+     0
+     9
+u3 =
+     9
+     9
+     9
+u4 =
+     8
+     0
+     5
+A = [u1 u2 u3], rref(A)
+A =
+     3     9     9
+     0     0     9
+     0     9     9
+ans =
+     1     0     0
+     0     1     0
+     0     0     1
+% Question 2 (a) (i) The equation A*x = 0 has no free variables since all of the variables in A are basic variables, in other words A has maximum rank.
+% Question 2 (a) (ii) The set S is linearly independent since only a trivial set of coefficients (all 0) will allow for a linear combination that results in the 0 vector. In other words, no vector in the set is in the span of the others.
+% Question 2 (b)
+B = [u1 u2 u3 u4], rref(B)
+B =
+     3     9     9     8
+     0     0     9     0
+     0     9     9     5
+ans =
+    1.0000         0         0    1.0000
+         0    1.0000         0    0.5556
+         0         0    1.0000         0
+% Question 2 (b) (i) The equation B*x = 0 has 1 free variable
+% Question 2 (b) (ii) The set T is linearly dependent by definition since the vector u4 can be expressed as a linear combination of the other vectors.
+% Question 2 (c)
+v = rand(1)*u1 + rand(1)*u2
+v =
+    9.3474
+         0
+    7.3204
+% Since v is a linear combination of u1 and u2, a set U = {u1, u2, v} would be linearly dependent since v can be expressed as a linear combination of the other vectors in the set. This means that regardless of the value of v, the fact that it is a linear combination of u1 and u2 means that there are some non-zero coefficients c1, c2, c3 such that the linear combination of these coefficients and the vectors u1, u2, and v will equal 0. Linear independence is defined as when the only linear combination of a set that equals 0 would be when all coefficients are 0. For the set U, this is false therefore the set is linearly dependent.
+U = [u1 u2 v], rref(U)
+U =
+    3.0000    9.0000    9.3474
+         0         0         0
+         0    9.0000    7.3204
+ans =
+    1.0000         0    0.6757
+         0    1.0000    0.8134
+         0         0         0
+% As shown above, when a matrix U is augmented with the vectors in set U and then placed into rref, there is a free variable corresponding to the vector v. This means that the set is linearly dependent.
+% Question 3
+A = rmat(2, 3), B = rmat(3, 4), C = rmat(4, 3), v = rvect(4)
+A =
+     0     0     9
+     1     8     2
+B =
+     0     8     5     0
+     8     4     6     1
+     5     7     3     4
+C =
+     3     7     0
+     7     1     5
+     3     2     2
+     7     7     5
+v =
+     3
+     3
+     5
+     3
+% Question 3 (a)
+u = B*v, A*u, D = A*B, D*v
+u =
+    49
+    69
+    63
+ans =
+   567
+   727
+D =
+    45    63    27    36
+    74    54    59    16
+ans =
+   567
+   727
+% Question 3 (b)
+A = [0 1; 0 0], B = [0 0; 1 0], C = [0 1; 1 0]
+A =
+     0     1
+     0     0
+B =
+     0     0
+     1     0
+C =
+     0     1
+     1     0
+% Question 3 (b) (i)
+A*B
+ans =
+     1     0
+     0     0
+B*A
+ans =
+     0     0
+     0     1
+% A*B and B*A are not equal
+(A + B)^2
+ans =
+     1     0
+     0     1
+A^2 + 2*A*B + B^2
+ans =
+     2     0
+     0     0
+% (A + B)^2 and A^2 + 2*A*B + B^2 are not equal
+% Question 3 (b) (ii)
+A^2
+ans =
+     0     0
+     0     0
+% If A were a number, then the value of A would equal the square root of A^2. This conclusion is not valid for matricies as the multiplying a matrix by itself does not square its entries.
+% Question 3 (b) (iii)
+A*C
+ans =
+     1     0
+     0     0
+A*B
+ans =
+     1     0
+     0     0
+% If A, B, anc C were numbers and A != 0 and B != C, then A*C != A*B. However, this is not valid for matrices as it it possible for B != C and A*C = A*B
+% Question 4
+A = [0, 0, 0, 1, 0, 1; 1, 0, 1, 1, 0, 0; 0, 1, 0, 1, 0, 0; 1, 0, 1, 0, 0, 0; 1, 1, 1, 0, 0, 1; 0, 0, 1, 1, 0, 0]
+A =
+     0     0     0     1     0     1
+     1     0     1     1     0     0
+     0     1     0     1     0     0
+     1     0     1     0     0     0
+     1     1     1     0     0     1
+     0     0     1     1     0     0
+% Question 4 (ii) Person 6 cannot receive a message in one stage from Person 2. This is shown on the graph as there is no direct connection directing Person 2 to Person 6. This can also be shown with the matrix A. The entry at A(2, 6) is 0, indication that there is no connection 2 -> 6. However, in the matrix A^2 which represents the number of 2-step connections from i -> j at each entry A^2(i, j), A^2(2, 6) = 1 indication that there are two-step connections between Person 2 and Person 6.
+A(2, 6)
+ans =
+     0
+A^2
+ans =
+     1     0     2     1     0     0
+     1     1     1     2     0     1
+     2     0     2     1     0     0
+     0     1     0     2     0     1
+     1     1     2     4     0     1
+     1     1     1     1     0     0
+ans(2, 6)
+ans =
+     1
+% ^ Shows that there is 1 two-step connection between Person 2 and Person 6
+% Question 4 (iii) The number of ways that Person i can reach Person j in k steps is given by the (i, j) entry of A^k. When A is multiplied by itself k number of times, the (i, j) entry of A^k equals the dot product of the ith row of A and the jth column of A. The dot product will count the number of connections between Person i and any Person k such that there is also a connection between Person k and Person j. Essentially, the number of k-step connections between Person i and Person j. Using this, the number of ways Person 1 can message Person 4 in 1, 2, 3, and 4 stages are given by A(1, 4), A^2(1, 4), A^3(1, 4) and A^4(1, 4) respectively.
+A(1, 4)
+ans =
+     1
+A^2
+ans =
+     1     0     2     1     0     0
+     1     1     1     2     0     1
+     2     0     2     1     0     0
+     0     1     0     2     0     1
+     1     1     2     4     0     1
+     1     1     1     1     0     0
+ans(1, 4)
+ans =
+     1
+A^3
+ans =
+     1     2     1     3     0     1
+     3     1     4     4     0     1
+     1     2     1     4     0     2
+     3     0     4     2     0     0
+     5     2     6     5     0     1
+     2     1     2     3     0     1
+ans(1, 4)
+ans =
+     3
+A^4
+ans =
+     5     1     6     5     0     1
+     5     4     6     9     0     3
+     6     1     8     6     0     1
+     2     4     2     7     0     3
+     7     6     8    14     0     5
+     4     2     5     6     0     2
+ans(1, 4)
+ans =
+     5
+% Person 1 can message Person 4 in 1 way with 1 step, 1 way with 2 steps, 3 ways with 3 steps, and 5 ways with 4 steps.
+% Question 4 (iv) Given that A^k(i, j) is the number of ways for Person i to message Person j in exactly k steps, if we sum A^k with some other A^p, A^q, A^r, A^s where k < p < q < r < s, then the (i, j) entry of the sum will be the number of ways that Person i can message Person j in at least s steps as the entry will be the sum of the number of ways that Person i can message Person j in s steps or k, p, q, and r steps, which are all less than s.
+B = A + A^2 + A^3 + A^4
+B =
+     7     3     9    10     0     3
+    10     6    12    16     0     5
+     9     4    11    12     0     3
+     6     5     7    11     0     4
+    14    10    17    23     0     8
+     7     4     9    11     0     3
+B(3, 4)
+ans =
+    12
+% Person 3 can message Person 4 in at most 4 stages in 12 different ways

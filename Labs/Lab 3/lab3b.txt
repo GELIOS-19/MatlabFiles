@@ -1,0 +1,77 @@
+% Question 5 (a)
+H = house; plot2d(H), hold on
+t = pi/6; Q = [cos(t), -sin(t); sin(t), cos(t)]
+Q =
+    0.8660   -0.5000
+    0.5000    0.8660
+plot2d(Q*H)
+% Question 5 (a) (i)
+% The house has rotated counterclockwise pi/6 radians.
+% Question 5 (a) (ii)
+det(Q)
+ans =
+     1
+% The area of the house has not changed after being rotated.
+t = -pi/3; Q = [cos(t), -sin(t); sin(t), cos(t)]
+Q =
+    0.5000    0.8660
+   -0.8660    0.5000
+plot2d(Q*H)
+% The house has been rotated clockwise by pi/3 radians.
+det(Q)
+ans =
+     1
+% The area of the house again has not changed after the rotation.
+% Question 5 (b)
+H = house; plot2d(H), hold on
+r = .9; D = [r, 0; 0, 1/r]
+D =
+    0.9000         0
+         0    1.1111
+plot2d(D*H)
+% Question 5 (b) (i)
+% The house became narrower and taller
+% Question 5 (b) (ii)
+det(D)
+ans =
+     1
+% The area of the transformed house has not changed.
+r = .8; D = [r, 0; 0, 1/r ]
+D =
+    0.8000         0
+         0    1.2500
+plot2d(D*H)
+% The house has become even narrower and more tall than the previous house.
+det(D)
+ans =
+     1
+% The area still has not changed.
+% Question 5 (c)
+t = 1/2; T = [1, t; 0, 1]
+T =
+    1.0000    0.5000
+         0    1.0000
+H = house; plot2d(H), hold on
+ t = 1/2; T = [1, t; 0, 1]
+T =
+    1.0000    0.5000
+         0    1.0000
+plot2d(T*H)
+% Question 5 (c) (i)
+% The house has streached, the bottom coords have been shifted left while the top coords have been shifted right.
+% Question 5 (c) (ii)
+det(T)
+ans =
+     1
+% The area of the house has not changed.
+t = -1/2; T = [1, t; 0, 1]
+T =
+    1.0000   -0.5000
+         0    1.0000
+plot2d(T*H)
+% The house has been tilted in the opposite direction, the bottom coords have been shifted right and the top coords have been shifted left.
+det(T)
+ans =
+     1
+% The area of the house has not changed.
+

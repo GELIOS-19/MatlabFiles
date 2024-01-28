@@ -1,0 +1,71 @@
+% Question 1 (b)
+c = R(:, 6)
+c =
+   -5.4000
+         0
+    0.8000
+x = [c; 0; 0]
+x =
+   -5.4000
+         0
+    0.8000
+         0
+         0
+A*x - b
+ans =
+     0
+     0
+     0
+S*x - c
+ans =
+     0
+     0
+     0
+% Question 1 (b) (ii) Matrices A and b are augmented as [A b] and then placed into reduced row echelon form by performing elementary row operations to obtain [S c]. Since these row operations are reversible, it stands that the solutions to both A*x = b and S*x = c are equal. The linear combination of A and x will equal b, and the linear combination of S and x will equal c.
+% Question 1 (c)
+u = [-S(:,4); 1; 0], v = [-S(:,5);0;1]
+u =
+    13
+    -1
+    -1
+     1
+     0
+v =
+    2.4250
+   -0.6250
+   -0.3500
+         0
+    1.0000
+% Question 1 (c) (i) Since A has 3 pivot columns represent 3 basic variables and 2 columns representing free variables, any non-trivial solution to the equation A*x = 0 will be a linear combination of the 2 non-pivot columns (column 4 and 5). This is because columns 1-3 are linearly independent and therefore the only linear combination of these columns that will add up to zero would be the trivial solution where all coefficients are 0. However, the 4th and 5th columns of A are linearly dependent, therefore only those two column vectors would contribute to the equation A*x = 0. Vectors u and v are constructed such that the coefficients they represent are the negatives of the coefficients in columns 4 and 5 respectively. Additionally, u(5, 1) = 0 and v(4, 1) = 0 while u(4, 1) = 1 and u(5, 1) = 1 ensures that the coefficients in u only influence the 4th column and the coefficients in v only influence the 5th column. Therefore A*u and A*v will result in 0 vectors, and since S is just the rref of A, S*u and S*v also result in zero vectors. 
+S*u
+ans =
+     0
+     0
+     0
+A*u
+ans =
+     0
+     0
+     0
+S*v
+ans =
+     0
+     0
+     0
+A*v
+ans =
+     0
+     0
+     0
+% Question 1 (c) (ii)
+s = rand(1), t = rand(1), y = s*u + t*v
+s =
+    0.3901
+t =
+    0.0572
+y =
+    5.2105
+   -0.4259
+   -0.4102
+    0.3901
+    0.0572

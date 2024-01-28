@@ -1,0 +1,377 @@
+rand('seed', 7132)
+% Arjun Sheshadri
+% 7132
+% Section 117
+% Math 250 MATLAB Lab Assignment #3
+% Question 1 (a)
+A = rand(3), A(1,1), det(A(1:2,1:2)), det(A)
+A =
+    0.0665    0.8662    0.0854
+    0.1701    0.9419    0.9000
+    0.0198    0.2654    0.5117
+ans =
+    0.0665
+ans =
+   -0.0847
+ans =
+   -0.0415
+U = A
+U =
+    0.0665    0.8662    0.0854
+    0.1701    0.9419    0.9000
+    0.0198    0.2654    0.5117
+col1
+L1 =
+    1.0000         0         0
+   -2.5569    1.0000         0
+   -0.2977         0    1.0000
+U = L1*U
+U =
+    0.0665    0.8662    0.0854
+         0   -1.2728    0.6815
+         0    0.0076    0.4863
+% Elementary row operations were used to perform the first step of converting U into row echelon form. The elementary operations were performed by multiplying a compound elementary matrix L1 with U. L1 was originally a 3x3 identity matrix. L1(2,:) and L1(3,:) were subtracted by multiples of L1(1,:) which were scaled according to the ration U(2,1)/U(1,1) for L1(1,:) and U(3,1)/U(1,1) for L1(3,:). These ratios determine the scale of L1(2,:) and L1(3,:) respectively in order to make sure that U(2,1) and U(3,1) are zero after the row operations are performed.
+% Question 1 (b)
+col2
+L2 =
+    1.0000         0         0
+         0    1.0000         0
+         0    0.0060    1.0000
+U=L2*U
+U =
+    0.0665    0.8662    0.0854
+         0   -1.2728    0.6815
+         0         0    0.4904
+% Elementary row operations were used to perform the second step of converting U into row echelon form, by making entry U(3,2) = 0. This was done in the same manner as the previous step, by subracting L2(3,:) by a multiple of L2(2,:) which is scaled by U(3,2)/U(2,2), a constant that will ensure that after the row operation that U(3,2)=0.
+U=L2*L1*A
+U =
+    0.0665    0.8662    0.0854
+         0   -1.2728    0.6815
+    0.0000         0    0.4904
+% Values of U match after L2*U and L2*L1*A
+% Question 1 (c)
+inv(L1), inv(L2), L = inv(L1)*inv(L2)
+ans =
+    1.0000         0         0
+    2.5569    1.0000         0
+    0.2977         0    1.0000
+ans =
+    1.0000         0         0
+         0    1.0000         0
+         0   -0.0060    1.0000
+L =
+    1.0000         0         0
+    2.5569    1.0000         0
+    0.2977   -0.0060    1.0000
+rand('seed', 7132)
+format compact
+% Question 2 (a)
+% inv(L) = inv(int(L1) * inv(L2)) = inv(inv(L1)) * inv(inv(L2)) = L1 * L2
+inv(L)
+ans =
+    1.0000         0         0
+   -2.5569    1.0000         0
+   -0.3129    0.0060    1.0000
+inv(U)
+ans =
+   15.0308   10.2287  -16.8345
+   -0.0000   -0.7856    1.0919
+   -0.0000   -0.0000    2.0393
+% Question 2 (b)
+b = rvect(3)
+b =
+     0
+     1
+     0
+c = inv(L)*b
+c =
+         0
+    1.0000
+    0.0060
+x = inv(U)*c
+x =
+   10.1285
+   -0.7791
+    0.0121
+A*x
+ans =
+    0.0000
+    1.0000
+   -0.0000
+% The result of A*x indeed equals b
+% Question 3 (a)
+A = rand(500); b = rand(500,1); [L U] = lu(A);
+tic; R = rref([A b]); y = R(:,501); toc
+Elapsed time is 0.628529 seconds.
+rreftime = 0.628529
+rreftime =
+    0.6285
+% Question 3 (b)
+tic; c = inv(L)*b; x = inv(U)*c; toc
+Elapsed time is 0.016192 seconds.
+lutime = 0.016192
+lutime =
+    0.0162
+norm(x - y)
+ans =
+   1.8797e-10
+% Question 3 (c)
+% Ratio should be the time complexity of rref divided by the time complexity of lu decomposition. ((2/3)cn^(3))/(2cn^(2)) = (1/3)n. When n = 500, (1/3)*500
+% Question 3 (c) (ii)
+rreftime / lutime
+ans =
+   38.8173
+% The observed ratio is 38.8173
+% Question 4 (a)
+a = rmat(4, 4)
+a =
+     6     2     7     9
+     9     2     2     0
+     8     5     6     8
+     8     3     7     9
+c = cofactor(a)
+c =
+  -46.0000   34.0000  173.0000 -105.0000
+   -2.0000    4.0000   34.0000  -26.0000
+  -18.0000   36.0000   45.0000  -31.0000
+   62.0000  -66.0000 -213.0000  139.0000
+a(1,1)*c(1,1) + a(1,2)*c(1,2) + a(1,3)*c(1,3) + a(1,4)*c(1,4)
+ans =
+   58.0000
+a(2,1)*c(2,1) + a(2,2)*c(2,2) + a(2,3)*c(2,3) + a(2,4)*c(2,4)
+ans =
+   58.0000
+a(1,3)*c(1,3) + a(2,3)*c(2,3) + a(3,3)*c(3,3) + a(4,3)*c(4,3)
+ans =
+   58.0000
+a(1,4)*c(1,4) + a(2,4)*c(2,4) + a(3,4)*c(3,4) + a(4,4)*c(4,4)
+ans =
+    58
+% According to thm  1.3 from the textbook, the determinant of an n x n matrix can be caluclated using the cofactor expansion along any row of the matrix. The first two statements are equal since they are just the cofactor expansion along the 1st and 2nd rows respectively. Since the determinant of a transpose of an n x n matrix is equal to the determinant of the original matrix, the cofactor expansion along any row of the transpose should equal the cofactor expansion along any row of the original. This essentially means that the cofactor expansion along any column of the original matrix should also equal the determinant since the rows of the transpose equal the columns of the origial. Using this, statements 3 and 4 are valid since they are the cofactor expanisions along columns 3 and 4 respectively.
+det(a)
+ans =
+   58.0000
+% Question 4 (b)
+A = rmat(5,5), U = triu(A)
+A =
+     9     4     1     1     8
+     2     8     3     3     7
+     0     4     3     5     3
+     5     0     9     1     5
+     8     9     1     2     0
+U =
+     9     4     1     1     8
+     0     8     3     3     7
+     0     0     3     5     3
+     0     0     0     1     5
+     0     0     0     0     0
+A(1,1)*A(2,2)*A(3,3)*A(4,4)*A(5,5)
+ans =
+     0
+U(1,1)*U(2,2)*U(3,3)*U(4,4)*U(5,5)
+ans =
+     0
+% You cannot find det(A) from multiplying the diagonal since it is not a triagular matrix. You can find det(U) by multiplying the diagonal since it is an upper triangular matrix.
+det(A)
+ans =
+   2.0626e+04
+det(U)
+ans =
+     0
+% Question 4 (c)
+A = rmat(5,5)
+A =
+     2     5     4     6     1
+     6     3     1     9     4
+     0     8     1     3     0
+     6     1     9     7     4
+     5     2     6     1     6
+B = A; B(2,:) = A(1,:); B(1,:) = A(2,:)
+B =
+     6     3     1     9     4
+     2     5     4     6     1
+     0     8     1     3     0
+     6     1     9     7     4
+     5     2     6     1     6
+% Since B is obtained by performing a row swap on A, an elementary row operation, B can be expressed as E*A where E is an elementary matrix with the same row swap performed on it. Therefore, det(B) = det(E) * det(A), and since the determinant of a row swap matrix is -1, det(B) = -det(A).
+det(A)
+ans =
+       -1362
+det(B)
+ans =
+        1362
+C = A; C(2,:) = A(2,:) + 10*A(1,:)
+C =
+     2     5     4     6     1
+    26    53    41    69    14
+     0     8     1     3     0
+     6     1     9     7     4
+     5     2     6     1     6
+% Question 4 (c) (ii)
+% det(C) = det(A) since C is obtained by adding a multiple of a row of A, this is also an elementary operation represented by an elementary matrix with determinant 1, so the determinant of C does not change.
+det(A)
+ans =
+       -1362
+det(C)
+ans =
+  -1.3620e+03
+D = A; D(1,:) = 10*A(1,:)
+D =
+    20    50    40    60    10
+     6     3     1     9     4
+     0     8     1     3     0
+     6     1     9     7     4
+     5     2     6     1     6
+% Question 4 (c) (iii)
+% det(D) = 10 * det(A), this is in the form det(D) = k * det(A) since the determinant of an elementary matrix with a row scaled by k is k itself. det(10 * A) = 10^(5) * det(A), this is in the form det(D) = k^(n)*det(A) where k is a constant of multiplication and n is the number of rows in A.
+det(A)
+ans =
+       -1362
+det(D)
+ans =
+      -13620
+det(10*A)
+ans =
+  -1.3620e+08
+% Question 4 (d)
+A = rmat(5,5)
+A =
+     2     9     2     2     2
+     5     7     0     5     0
+     3     0     2     9     6
+     1     3     8     2     2
+     9     3     3     7     7
+A(1,1)=0; A(2,1) = 0
+A =
+     0     9     2     2     2
+     0     7     0     5     0
+     3     0     2     9     6
+     1     3     8     2     2
+     9     3     3     7     7
+[P, L, U, sign] = splu(A)
+P =
+     0     0     1     0     0
+     0     1     0     0     0
+     1     0     0     0     0
+     0     0     0     1     0
+     0     0     0     0     1
+L =
+    1.0000         0         0         0         0
+         0    1.0000         0         0         0
+         0    1.2857    1.0000         0         0
+    0.3333    0.4286    3.6667    1.0000         0
+    3.0000    0.4286   -1.5000   -2.1982    1.0000
+U =
+    3.0000         0    2.0000    9.0000    6.0000
+         0    7.0000         0    5.0000         0
+         0         0    2.0000   -4.4286    2.0000
+         0         0         0   13.0952   -7.3333
+         0         0         0         0  -24.1200
+sign =
+    -1
+P*A
+ans =
+     3     0     2     9     6
+     0     7     0     5     0
+     0     9     2     2     2
+     1     3     8     2     2
+     9     3     3     7     7
+L*U
+ans =
+    3.0000         0    2.0000    9.0000    6.0000
+         0    7.0000         0    5.0000         0
+         0    9.0000    2.0000    2.0000    2.0000
+    1.0000    3.0000    8.0000    2.0000    2.0000
+    9.0000    3.0000    3.0000    7.0000    7.0000
+% Question 4 (d) (i)
+% det(P) = sign. P is a permutation matrix which is an identity matrix with row swaps performed on it only. P can be obtained by multiplying different elementary matrices with row swaps with the identity. Since the determinant of the identity is 1 and the determinant of each elementary row swap matrix is -1, the determinant of P will be 1 for an even number of row swaps and -1 for an odd number of row swaps. This number is the sign of the final determinant obtained from splu(A).
+% Question 4 (d) (ii)
+% det(L) = 1 since this is the product of the diagonal of L. Since L is a lower triangular matrix, the determinant can be obtained by multiplying the diagonal entries.
+det(L)
+ans =
+     1
+% Question 4 (d) (iii)
+% det(U) = -det(A) since U is obtained through 1 row swap of A, therefore det(U) = the determinant of row swap elementary matrix * det(A), which is -1 * det(A)
+det(U)
+ans =
+      -13266
+det(A)
+ans =
+   1.3266e+04
+% Question 5 (a)
+H = house; plot2d(H), hold on
+t = pi/6; Q = [cos(t), -sin(t); sin(t), cos(t)]
+Q =
+    0.8660   -0.5000
+    0.5000    0.8660
+plot2d(Q*H)
+% Question 5 (a) (i)
+% The house has rotated counterclockwise pi/6 radians.
+% Question 5 (a) (ii)
+det(Q)
+ans =
+     1
+% The area of the house has not changed after being rotated.
+t = -pi/3; Q = [cos(t), -sin(t); sin(t), cos(t)]
+Q =
+    0.5000    0.8660
+   -0.8660    0.5000
+plot2d(Q*H)
+% The house has been rotated clockwise by pi/3 radians.
+det(Q)
+ans =
+     1
+% The area of the house again has not changed after the rotation.
+% Question 5 (b)
+H = house; plot2d(H), hold on
+r = .9; D = [r, 0; 0, 1/r]
+D =
+    0.9000         0
+         0    1.1111
+plot2d(D*H)
+% Question 5 (b) (i)
+% The house became narrower and taller
+% Question 5 (b) (ii)
+det(D)
+ans =
+     1
+% The area of the transformed house has not changed.
+r = .8; D = [r, 0; 0, 1/r ]
+D =
+    0.8000         0
+         0    1.2500
+plot2d(D*H)
+% The house has become even narrower and more tall than the previous house.
+det(D)
+ans =
+     1
+% The area still has not changed.
+% Question 5 (c)
+t = 1/2; T = [1, t; 0, 1]
+T =
+    1.0000    0.5000
+         0    1.0000
+H = house; plot2d(H), hold on
+ t = 1/2; T = [1, t; 0, 1]
+T =
+    1.0000    0.5000
+         0    1.0000
+plot2d(T*H)
+% Question 5 (c) (i)
+% The house has streached, the bottom coords have been shifted left while the top coords have been shifted right.
+% Question 5 (c) (ii)
+det(T)
+ans =
+     1
+% The area of the house has not changed.
+t = -1/2; T = [1, t; 0, 1]
+T =
+    1.0000   -0.5000
+         0    1.0000
+plot2d(T*H)
+% The house has been tilted in the opposite direction, the bottom coords have been shifted right and the top coords have been shifted left.
+det(T)
+ans =
+     1
+% The area of the house has not changed.
+
